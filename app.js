@@ -1,6 +1,30 @@
-var express = require('express')
-var app = express()
+const express = require('express')
+const app = express()
+app.use(express.json())
 
-app.listen(3000, function() {
-    console.log("start! express server on port 3000")
-})
+const port = 3000;
+
+/**
+ * @description app settings
+ */
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+/**
+ * @description initialize db
+ */
+const db = require("./db/query.js");
+
+/**
+ * @description router import
+ */
+const indexRouter = require("./routes/")(express);
+app.use("/", indexRouter);
+const loginRouter = require("./routes/login/login")(express);
+app.use("/login", loginRouter);
+const registerRouter = require("./routes/login/register")(express);
+app.use("/register", registerRouter);
+
+app.listen(port, function() {
+    console.log(`Second Life back-end server listening on port ${port}`)
+}) 
