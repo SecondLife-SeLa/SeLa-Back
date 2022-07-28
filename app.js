@@ -22,7 +22,7 @@ const indexRouter = require("./routes/")(express);
 app.use("/", indexRouter);
 const loginRouter = require("./routes/login/login")(express);
 app.use("/login", loginRouter);
-const registerRouter = require("./routes/login/register")(express);
+const registerRouter = require("./routes/login/register")(express, db);
 app.use("/register", registerRouter);
 
 app.listen(port, function() {
