@@ -8,7 +8,7 @@ module.exports = (express, db) => {
    */
   // login page
   router.get("/checkIdExists", (req, res) => {
-    db.checkIdExists(req.query.id, (result) => {
+    db.checkIdExists(req.body.id, (result) => {
       if (result[0].exist === 0){
         res.send('ok')
       } else if (result[0].exist === 1){
