@@ -16,6 +16,12 @@ app.use(express.urlencoded({ extended: false }));
 const db = require("./db/query.js");
 
 /**
+ * @description set cors
+ */
+const cors = require('cors')
+app.use(cors())
+
+/**
  * @description router import
  */
 const indexRouter = require("./routes/")(express);
