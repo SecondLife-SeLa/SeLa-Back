@@ -30,6 +30,10 @@ const loginRouter = require("./routes/login/login")(express);
 app.use("/login", loginRouter);
 const registerRouter = require("./routes/login/register")(express, db);
 app.use("/register", registerRouter);
+const communityRouter = require("./routes/community/index")(express, db);
+app.use("/community", communityRouter);
+const talentRouter = require("./routes/talent/index")(express, db);
+app.use("/talent", talentRouter);
 
 app.listen(port, function() {
     console.log(`Second Life back-end server listening on port ${port}`)
