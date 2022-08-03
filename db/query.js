@@ -16,6 +16,29 @@ function checkIdExists(id, callback) {
   });
 }
 
+function loadPostList(type, category, page, callback) {
+  let SQL
+  let values
+  if (type === 'community') {
+    SQL = `SELECT * FROM community WHERE category = ? ORDER BY idx DESC LIMIT ?, 10`;
+    values = [category, ((page - 1) * 20)];
+  } else if (type === 'talent') {
+    SQL = `SELECT * FROM talent ORDER BY idx DESC LIMIT ?, 10`;
+    values = [((page - 1) * 20)];
+  }
+
+  con.query(SQL, values, (err, result, field) => {
+    if (err) {
+      console.log(err);
+      callback('err');
+    }
+    else {
+      callback(result);
+    }
+  });
+}
+
 module.exports = {
-  checkIdExists
+  checkIdExists,
+  loadPostList
 }
