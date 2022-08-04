@@ -25,6 +25,9 @@ function loadPostList(type, category, page, callback) {
   } else if (type === 'talent') {
     SQL = `SELECT * FROM talent ORDER BY idx DESC LIMIT ?, 10`;
     values = [((page - 1) * 20)];
+  } else if (type === 'job') {
+    SQL = `SELECT * FROM job WHERE category = ? ORDER BY idx`;
+    values = [category];
   }
 
   con.query(SQL, values, (err, result, field) => {

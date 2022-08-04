@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 app.use(express.json())
 
-const port = 3000;
+const port = 3333;
 
 /**
  * @description app settings
@@ -34,6 +34,8 @@ const communityRouter = require("./routes/community/index")(express, db);
 app.use("/community", communityRouter);
 const talentRouter = require("./routes/talent/index")(express, db);
 app.use("/talent", talentRouter);
+const jobRouter = require("./routes/job/index")(express, db);
+app.use("/job", jobRouter);
 
 app.listen(port, function() {
     console.log(`Second Life back-end server listening on port ${port}`)
