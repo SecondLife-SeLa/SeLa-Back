@@ -8,7 +8,7 @@ module.exports = (express, db) => {
    * @returns job db data
    */
   router.get("/", (req, res) => {
-    db.loadPostList('job', req.body.category, null, (result) => {
+    db.loadPostList('job', req.query.category, null, (result) => {
       res.send(result)
     })
   });
