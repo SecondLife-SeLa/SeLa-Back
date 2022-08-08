@@ -41,7 +41,23 @@ function loadPostList(type, category, page, callback) {
   });
 }
 
+function getUserInfo(id, callback) {
+  const SQL = `SELECT * FROM user WHERE id = ?`
+  const values = [id];
+
+  con.query(SQL, values, (err, result, field) => {
+    if (err) {
+      console.log(err);
+      callback('err');
+    }
+    else {
+      callback(result);
+    }
+  });
+}
+
 module.exports = {
   checkIdExists,
-  loadPostList
+  loadPostList,
+  getUserInfo
 }

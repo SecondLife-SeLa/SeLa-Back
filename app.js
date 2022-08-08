@@ -26,9 +26,9 @@ app.use(cors())
  */
 const indexRouter = require("./routes/")(express);
 app.use("/", indexRouter);
-const loginRouter = require("./routes/login/login")(express);
+const loginRouter = require("./routes/user/login")(express, db);
 app.use("/login", loginRouter);
-const registerRouter = require("./routes/login/register")(express, db);
+const registerRouter = require("./routes/user/register")(express, db);
 app.use("/register", registerRouter);
 const communityRouter = require("./routes/community/index")(express, db);
 app.use("/community", communityRouter);
