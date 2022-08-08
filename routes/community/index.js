@@ -8,7 +8,7 @@ module.exports = (express, db) => {
    * @returns community db data
    */
   router.get("/", (req, res) => {
-    db.loadPostList('community', req.body.category, req.body.page, (result) => {
+    db.loadPostList('community', req.query.category, req.query.page, (result) => {
       res.send(result)
     })
   });
