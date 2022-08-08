@@ -9,7 +9,7 @@ module.exports = (express, db) => {
    */
   router.get("/", (req, res) => {
     db.loadPostList('community', req.query.category, req.query.page, (result) => {
-      res.send(result)
+      res.send(result[0])
     })
   });
 
