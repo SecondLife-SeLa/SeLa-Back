@@ -36,7 +36,7 @@ module.exports = (express, db, multer, multerS3, s3) => {
    * @method post
    * @returns status code
    */
-  router.get("/write", (req, res) => {
+  router.get("/write", talent_img_upload.single("img"), (req, res) => {
     // have to write code here
   });
 
