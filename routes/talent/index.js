@@ -35,12 +35,14 @@ module.exports = (express, db, multer, multerS3, s3) => {
    * @method post
    * @returns status code
    */
-  router.post("/write", talent_img_upload.array("img"), (req, res) => {
+  router.post("/write", talent_img_upload.any(), (req, res) => {
     let uri = ''
-    req.files?.map(file => {
-      uri += file.location + '|'
-    })
-    uri = uri.slice(0, -1)
+    if (req.files) {
+      req.files.map(file => {
+        uri += file.location + '|'
+      })
+      uri = uri.slice(0, -1)
+    }
     db.insertTalent(req.body.category, req.body.title, req.body.content, req.body.fee, req.body.writer, req.body.end_time, uri, () => {
       res.sendStatus(200)
     })
