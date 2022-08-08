@@ -3,10 +3,9 @@ module.exports = (express, db, multer, multerS3, s3) => {
   const router = express.Router({ mergeParams: true });
 
   const talent_img_upload = multer({
-    // use multer module to save image from symptom img upload
     storage: multerS3({
       s3: s3,
-      bucket: "second_life_imgs/talent_img_upload",
+      bucket: "secondlifeserver/talent_img_upload",
       acl: "public-read",
       key: function (req, file, cb) {
         cb(
@@ -36,8 +35,15 @@ module.exports = (express, db, multer, multerS3, s3) => {
    * @method post
    * @returns status code
    */
-  router.get("/write", talent_img_upload.single("img"), (req, res) => {
-    // have to write code here
+  router.post("/write", talent_img_upload.array("img"), (req, res) => {
+    let uri = ''
+    req.files?.map(file => {
+      uri += file.location + '|'
+    })
+    uri = uri.slice(0, -1)
+    db.insertTalent(req.body.category, req.body.title, req.body.content, req.body.fee, req.body.writer, req.body.end_time, uri, () => {
+      res.sendStatus(200)
+    })
   });
 
   return router;
