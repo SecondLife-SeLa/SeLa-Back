@@ -56,8 +56,24 @@ function getUserInfo(id, callback) {
   });
 }
 
+function insertTalent(category, title, content, fee, writer, end_time, uri, callback) {
+  const SQL = `INSERT INTO talent(category, title, content, fee, writer, end_time, images, start_time) VALUES(?, ?, ?, ?, ?, ?, ?, NOW())`
+  const values = [category, title, content, fee, writer, end_time, uri];
+
+  con.query(SQL, values, (err, result, field) => {
+    if (err) {
+      console.log(err);
+      callback('err');
+    }
+    else {
+      callback(result);
+    }
+  });
+}
+
 module.exports = {
   checkIdExists,
   loadPostList,
-  getUserInfo
+  getUserInfo,
+  insertTalent
 }
