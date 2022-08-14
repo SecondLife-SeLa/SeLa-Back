@@ -21,6 +21,13 @@ const db = require("./db/query.js");
 const cors = require('cors')
 app.use(cors())
 
+// multer & aws
+const aws = require("aws-sdk");
+aws.config.loadFromPath("./config/awsconfig.json");
+const multer = require("multer");
+const multerS3 = require("multer-s3");
+const s3 = new aws.S3();
+
 /**
  * @description router import
  */
@@ -30,9 +37,9 @@ const loginRouter = require("./routes/user/login")(express, db);
 app.use("/login", loginRouter);
 const registerRouter = require("./routes/user/register")(express, db);
 app.use("/register", registerRouter);
-const communityRouter = require("./routes/community/index")(express, db);
+const communityRouter = require("./routes/community/index")(express, db, multer, multerS3, s3);
 app.use("/community", communityRouter);
-const talentRouter = require("./routes/talent/index")(express, db);
+const talentRouter = require("./routes/talent/index")(express, db, multer, multerS3, s3);
 app.use("/talent", talentRouter);
 const jobRouter = require("./routes/job/index")(express, db);
 app.use("/job", jobRouter);

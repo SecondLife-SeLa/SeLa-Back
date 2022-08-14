@@ -1,5 +1,5 @@
 // launch modules
-module.exports = (express, db) => {
+module.exports = (express, db, multer, multerS3, s3) => {
   const router = express.Router({ mergeParams: true });
 
   const talent_img_upload = multer({
