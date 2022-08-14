@@ -19,5 +19,13 @@ module.exports = (express, db) => {
     })
   });
 
+  router.post("/", (req, res) => {
+    const client = req.body;
+    db.insertUserinfo(req.body.id, req.body.pw, req.body.name, req.body.birth, req.body.img, req.body.tag, req.body.career, req.body.intro, req.body.intro_one, () => {
+      res.send('ok')
+    })
+  });
+  
+
   return router;
 }

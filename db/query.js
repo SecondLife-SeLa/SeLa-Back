@@ -16,6 +16,20 @@ function checkIdExists(id, callback) {
   });
 }
 
+function insertUserinfo(id, pw, name, birth, img, tag, career,intro,intro_one, callback){ 
+  const SQL = "insert into user(id, pw, name, birth, img, tag, career,intro, intro_one) values (?, ?, ?, ?, ?, ?, ?, ?,?);";
+  const values = [id, pw, name, birth, img, tag, career, intro, intro_one];
+  con.query(SQL, values, (err, result, field) => {
+    if (err) {
+      console.log(err);
+      callback('err');
+    }
+    else {
+      callback(result);
+    }
+  });
+};
+
 function loadPostList(type, category, page, callback) {
   let SQL
   let values
@@ -73,6 +87,7 @@ function insertTalent(category, title, content, fee, writer, end_time, uri, call
 
 module.exports = {
   checkIdExists,
+  insertUserinfo,
   loadPostList,
   getUserInfo,
   insertTalent
