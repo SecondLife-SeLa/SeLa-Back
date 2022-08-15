@@ -42,6 +42,8 @@ function loadPostList(type, category, page, callback) {
   } else if (type === 'job') {
     SQL = `SELECT * FROM job WHERE category = ? ORDER BY idx`;
     values = [category];
+  } else if (type === 'lecture') {
+    SQL = `SELECT id, name, img, intro_one FROM user`;
   }
 
   con.query(SQL, values, (err, result, field) => {
