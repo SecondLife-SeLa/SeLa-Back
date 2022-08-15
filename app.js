@@ -21,7 +21,9 @@ const db = require("./db/query.js");
 const cors = require('cors')
 app.use(cors())
 
-// multer & aws
+/**
+ * @description multer & aws
+ */
 const aws = require("aws-sdk");
 aws.config.loadFromPath("./config/awsconfig.json");
 const multer = require("multer");
@@ -29,11 +31,18 @@ const multerS3 = require("multer-s3");
 const s3 = new aws.S3();
 
 /**
+ * @description session
+ */
+const session = require('express-session');
+const MySQLStore = require('express-mysql-session')(session);
+const sessionStore = new MySQLStore(require('./config/db.json'));
+
+/**
  * @description router import
  */
 const indexRouter = require("./routes/")(express);
 app.use("/", indexRouter);
-const loginRouter = require("./routes/user/login")(express, db);
+const loginRouter = require("./routes/user/login")(express, db, session, sessionStore);
 app.use("/login", loginRouter);
 const registerRouter = require("./routes/user/register")(express, db);
 app.use("/register", registerRouter);
