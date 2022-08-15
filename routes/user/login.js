@@ -1,5 +1,5 @@
 // launch modules
-module.exports = (express, db) => {
+module.exports = (express, db,) => {
   const router = express.Router({ mergeParams: true });
 
   /**
