@@ -13,6 +13,7 @@ const options =
 }
 
 const sessionStore = new MySQLStore(options);
+console.log(sessionStore)
 
 app.use(session
     ({
