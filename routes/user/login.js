@@ -1,3 +1,5 @@
+const { response } = require("express");
+
 // launch modules
 module.exports = (express, db, session, sessionStore) => {
 
@@ -8,7 +10,10 @@ module.exports = (express, db, session, sessionStore) => {
         secret: 'JVLg|FZ0MFOmP~H',
         resave:false,
         saveUninitialized:true,
-        store:sessionStore
+        store:sessionStore,
+        saveUninitialized: true,
+        cookie: { maxAge :600000 }, //10분 
+        rolling : true  // rolling 새로고침시 maxage 갱신
   }));
 
   /**
@@ -28,7 +33,7 @@ module.exports = (express, db, session, sessionStore) => {
             res.status(200).send(user[0]) // 로그인 성공
           })
         } else{
-          res.status(400).send("비밀번호 불일치") // 비밀번호 불일치
+            res.status(400).send("비밀번호 불일치")
         }
       } else {
         res.status(401).send("아이디 불일치") // 아이디 불일치
@@ -36,6 +41,11 @@ module.exports = (express, db, session, sessionStore) => {
     })
   });
 
+  router.get('/logout', function(req, res) {
+    req.session.destroy(function(){
+      res.send('로그아웃')
+    });
+  });
   return router;
 }
   

@@ -36,6 +36,7 @@ const s3 = new aws.S3();
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const sessionStore = new MySQLStore(require('./config/db.json'));
+const auth = require('./routes/user/auth')
 
 /**
  * @description router import
@@ -44,7 +45,7 @@ const indexRouter = require("./routes/")(express);
 app.use("/", indexRouter);
 const loginRouter = require("./routes/user/login")(express, db, session, sessionStore);
 app.use("/login", loginRouter);
-const registerRouter = require("./routes/user/register")(express, db);
+const registerRouter = require("./routes/user/register")(express, db, multer, multerS3, s3);
 app.use("/register", registerRouter);
 const communityRouter = require("./routes/community/index")(express, db, multer, multerS3, s3);
 app.use("/community", communityRouter);
