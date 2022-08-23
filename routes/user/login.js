@@ -30,7 +30,6 @@ module.exports = (express, db, session, sessionStore) => {
           req.session.is_logined = true;
           req.session.name = client.id;
           req.session.save(function(){
-            console.log (req.session)
             res.status(200).send(user[0]) // 로그인 성공
           })
         } else{

@@ -51,8 +51,10 @@ const communityRouter = require("./routes/community/index")(express, db, multer,
 app.use("/community", communityRouter);
 const talentRouter = require("./routes/talent/index")(express, db, multer, multerS3, s3);
 app.use("/talent", talentRouter);
-const jobRouter = require("./routes/job/index")(express, db);
+const jobRouter = require("./routes/job/index")(express, db, multer, multerS3, s3);
 app.use("/job", jobRouter);
+const lectureRouter = require("./routes/lecture/index")(express, db);
+app.use("/lecture", lectureRouter);
 
 app.listen(port, function() {
     console.log(`Second Life back-end server listening on port ${port}`)
