@@ -36,6 +36,13 @@ module.exports = (express, db, multer, multerS3, s3) => {
    * @returns status code
    */
     router.post("/",  job_img_upload.any(), (req, res) => {
+      let uri = ''
+      if (req.files) {
+        req.files.map(file => {
+          uri += file.location + '|'
+        })
+        uri = uri.slice(0, -1) // 마지막 요소 추출 x (첫번째 요소부터 마지막에서 두번째 요소까지)
+      }
       const info = req.body
       db.insertJob(
         info.name, 
@@ -44,7 +51,7 @@ module.exports = (express, db, multer, multerS3, s3) => {
         info.area, 
         info.edu, 
         info.form, 
-        info.url, 
+        uri, 
         info.content, 
         (result) => {
           res.sendStatus(200)
