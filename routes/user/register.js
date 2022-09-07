@@ -36,7 +36,6 @@ module.exports = (express, db, multer, multerS3, s3) => {
   });
 
   router.post("/", user_img_upload.any(), (req, res) => {
-    console.log(req)
     let uri = ''
     if (req.files) {
       req.files.map(file => {
