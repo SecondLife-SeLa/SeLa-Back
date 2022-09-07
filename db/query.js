@@ -73,7 +73,7 @@ function getUserInfo(id, callback) {
 }
 
 function insertTalent(category, title, content, fee, writer, start_time, end_time, uri, callback) {
-  const SQL = `INSERT INTO talent(category, title, content, fee, writer, start_time, end_time, images, start_time) VALUES(?, ?, ?, ?, ?, ?, ?, ?, NOW())`
+  const SQL = `INSERT INTO talent(category, title, content, fee, writer, start_time, end_time, images) VALUES(?, ?, ?, ?, ?, ?, ?, ?)`
   const values = [category, title, content, fee, writer, start_time, end_time, uri];
 
   con.query(SQL, values, (err, result, field) => {
