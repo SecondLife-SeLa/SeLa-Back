@@ -72,9 +72,9 @@ function getUserInfo(id, callback) {
   });
 }
 
-function insertTalent(category, title, content, fee, writer, end_time, uri, callback) {
-  const SQL = `INSERT INTO talent(category, title, content, fee, writer, end_time, images, start_time) VALUES(?, ?, ?, ?, ?, ?, ?, NOW())`
-  const values = [category, title, content, fee, writer, end_time, uri];
+function insertTalent(category, title, content, fee, writer, start_time, end_time, uri, callback) {
+  const SQL = `INSERT INTO talent(category, title, content, fee, writer, start_time, end_time, images) VALUES(?, ?, ?, ?, ?, ?, ?, ?)`
+  const values = [category, title, content, fee, writer, start_time, end_time, uri];
 
   con.query(SQL, values, (err, result, field) => {
     if (err) {
@@ -87,9 +87,9 @@ function insertTalent(category, title, content, fee, writer, end_time, uri, call
   });
 }
 
-function insertJob(name, duty, career, area, edu, form, url, content, callback){ 
-  const SQL = "insert into job(category, name, duty, career, area, edu, form, url, content) values (1, ?, ?, ?, ?, ?, ?, ?, ?);";
-  const values = [name, duty, career, area, edu, form, url, content];
+function insertJob(name, duty, career, area, edu, form, content, url, img, callback){ 
+  const SQL = "insert into job(category, name, duty, career, area, edu, form, content, url, img) values (1, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+  const values = [name, duty, career, area, edu, form, content, url, img];
   con.query(SQL, values, (err, result, field) => {
     if (err) {
       console.log(err);
