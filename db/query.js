@@ -88,7 +88,7 @@ function insertTalent(category, title, content, fee, writer, end_time, uri, call
 }
 
 function insertJob(name, duty, career, area, edu, form, url, content, callback){ 
-  const SQL = "insert into job(category, name, duty, career, area, edu, form, url, content) values (1, ?, ?, ?, ?, ?, ?, ?, ?);";
+  const SQL = "insert into job(category, name, duty, career, area, edu, form, content, url, img) values (1, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
   const values = [name, duty, career, area, edu, form, url, content];
   con.query(SQL, values, (err, result, field) => {
     if (err) {

@@ -51,8 +51,9 @@ module.exports = (express, db, multer, multerS3, s3) => {
         info.area, 
         info.edu, 
         info.form, 
-        uri, 
         info.content, 
+        info.url,
+        uri, 
         (result) => {
           res.sendStatus(200)
       })
