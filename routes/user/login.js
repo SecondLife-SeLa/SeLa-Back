@@ -41,9 +41,10 @@ module.exports = (express, db, session, sessionStore) => {
     })
   });
 
+  // logout router 
   router.get('/logout', function(req, res) {
     req.session.destroy(function(){
-      res.send('로그아웃')
+      res.redirect('/');
     });
   });
   return router;
