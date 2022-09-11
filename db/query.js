@@ -72,9 +72,9 @@ function getUserInfo(id, callback) {
   });
 }
 
-function insertTalent(category, title, content, fee, writer, end_time, uri, callback) {
-  const SQL = `INSERT INTO talent(category, title, content, fee, writer, end_time, images, start_time) VALUES(?, ?, ?, ?, ?, ?, ?, NOW())`
-  const values = [category, title, content, fee, writer, end_time, uri];
+function insertTalent(category, title, content, fee, writer, start_time, end_time, uri, callback) {
+  const SQL = `INSERT INTO talent(category, title, content, fee, writer, start_time, end_time, images) VALUES(?, ?, ?, ?, ?, ?, ?, ?)`
+  const values = [category, title, content, fee, writer, start_time, end_time, uri];
 
   con.query(SQL, values, (err, result, field) => {
     if (err) {
@@ -101,11 +101,27 @@ function insertJob(name, duty, career, area, edu, form, url, content, callback){
   });
 };
 
+function correctTalent(category, title, content, fee, writer, end_time, start_time, uri, idx, callback){
+  const SQL = 'update talent set category = ?, title = ?, content = ?, fee = ?, writer = ?, start_time = ?, end_time = ?, images = ? where idx = ?';
+  con.query(SQL, [category, title, content, fee, writer, start_time, end_time, uri, idx], (err, result, field) => {
+    if (err) {
+      console.log(err);
+      callback('err');
+    }
+    else { 
+      callback(result);
+    }
+
+  });
+};
+
+
 module.exports = {
   checkIdExists,
   insertUserinfo,
   loadPostList,
   getUserInfo,
   insertTalent,
-  insertJob
+  insertJob,
+  correctTalent
 }
