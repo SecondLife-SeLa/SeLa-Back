@@ -23,7 +23,7 @@ module.exports = (express, db, session, sessionStore) => {
         data : {communityIdx, userid, title}
     };
 
-    router.post("/", async(req, res) => {
+    router.post("/community", async(req, res) => {
         communityIdx = req.body.idx;
         userid = req.session.name;
         title = req.body.title;
@@ -33,26 +33,58 @@ module.exports = (express, db, session, sessionStore) => {
             
         })
 
-        await db.getLikeList(req.body.idx, req.session.name, (likeResult) => {
+        await db.getCommunityLikeList(req.body.idx, req.session.name, (likeResult) => {
             if(likeResult[0]) {
                 resResult.status = 1;
                 resResult.message = "좋아요 -1"
                 resResult.data = {communityIdx, userid, title};
                 res.send(resResult)
-                db.Like(resResult.status, req.body.idx, req.session.name, () => {
+                db.communityLike(resResult.status, req.body.idx, req.session.name, () => {
         }) 
             } else { 
                 resResult.status = 0;
                 resResult.message = "좋아요 +1"
                 resResult.data = "";
                 res.send(resResult)
-                db.Like(resResult.status, req.body.idx, req.session.name, () => {
+                db.communityLike(resResult.status, req.body.idx, req.session.name, () => {
                 }) 
             } 
         }    
         ); 
         
     });
+
+    router.post("/job", async(req, res) => {
+        jobIdx = req.body.idx;
+        userid = req.session.name;
+        title = req.body.title;
+
+        await db.getjobLike(req.body.idx, req.session.name, (jobResult) => {
+        console.log(jobResult)
+            
+        })
+
+        await db.getjobLikeList(req.body.idx, req.session.name, (likeResult) => {
+            if(likeResult[0]) {
+                resResult.status = 1;
+                resResult.message = "좋아요 -1"
+                resResult.data = {jobIdx, userid, title};
+                res.send(resResult)
+                db.jobLike(resResult.status, req.body.idx, req.session.name, () => {
+        }) 
+            } else { 
+                resResult.status = 0;
+                resResult.message = "좋아요 +1"
+                resResult.data = "";
+                res.send(resResult)
+                db.jobLike(resResult.status, req.body.idx, req.session.name, () => {
+                }) 
+            } 
+        }    
+        ); 
+        
+    });
+
 
     return router;
 
