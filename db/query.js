@@ -111,10 +111,70 @@ function correctTalent(category, title, content, fee, writer, end_time, start_ti
     else { 
       callback(result);
     }
-
   });
 };
 
+function getCommunityLike(idx, userid,  callback){
+  const SQL = 'select * from community where idx = ? ';
+  con.query(SQL, [idx, userid ], (err, result, field) => {
+    if (err) {
+      console.log(err);
+      callback('err')
+    }
+    else{
+      callback(result);
+    } 
+  });
+};
+
+
+function getLikeList(idx, userid, callback){
+  const SQL = 'select * from communitylike where idx = ? and userid = ?';
+  con.query(SQL, [idx, userid], (err, result, field) => {
+    if (err) {
+      console.log(err);
+      callback('err')
+    }
+    else{
+      callback(result);
+    } 
+  });
+};
+
+function Like(status, idx, userid, callback){
+  let SQL1
+  let SQL2 
+  const values = [idx, userid];
+    if(status === 0){
+      SQL1 = 'insert into communitylike(idx, userid) values(?, ?)';  
+      SQL2 =  'update community set like_sum = like_sum + 1 where idx = ?';
+
+    } else if (status === 1){
+      SQL1 = 'delete from communitylike where idx = ? and userid = ?';  
+      SQL2 = 'update community set  like_sum = like_sum - 1 where idx = ? ';
+    } 
+
+      con.query(SQL1, values, (err, result, field) => {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      console.log('success SQL1')
+    }
+      });
+      con.query(SQL2, [idx, ], (err, result, field) => {
+        if (err) {
+          console.log(err);
+        }
+        else {
+          console.log('success SQL2')
+        }
+          });
+  }
+  
+
+
+  
 
 module.exports = {
   checkIdExists,
@@ -123,5 +183,13 @@ module.exports = {
   getUserInfo,
   insertTalent,
   insertJob,
-  correctTalent
+  correctTalent,
+  getCommunityLike,
+  getLikeList,
+  Like
 }
+
+
+
+
+
