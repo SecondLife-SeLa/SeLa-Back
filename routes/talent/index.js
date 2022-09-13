@@ -48,5 +48,18 @@ module.exports = (express, db, multer, multerS3, s3) => {
     })
   });
 
+  router.post("/correctWrite", talent_img_upload.any(), (req, res) => {
+    let uri = ''
+    if (req.files) {
+      req.files.map(file => {
+        uri += file.location + '|'
+      })
+      uri = uri.slice(0, -1)
+    }
+    db.correctTalent(req.body.category, req.body.title, req.body.content, req.body.fee, req.body.writer, req.body.end_time, req.body.end_time, uri, req.body.idx, () => {
+      res.sendStatus(200)
+    })
+  });
+
   return router;
 }

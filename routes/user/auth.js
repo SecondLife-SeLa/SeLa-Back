@@ -1,3 +1,5 @@
+const { Router } = require("express");
+
 module.exports = (express, session, sessionStore) => {
 
     const router = express.Router({ mergeParams: true });
@@ -16,13 +18,24 @@ module.exports = (express, session, sessionStore) => {
     router.get('/', function(req, res) {
       const sess = req.session;
   
-      if(req.session.is_logined){
+      if(sess.is_logined){
         let username = sess.name;
           res.status(200).send(`${username}님 안녕하세요`)
       } else {
           res.status(401).send("권한 없음") // 유효한 인증정보 x
-  }
-  });
+      }
+    });
+    router.get('/correction', function(req, res) {
+        const sess = req.session
+        if(sess.name === req.body.id) {
+            res.redirect('/') // 수정 라우터로 연결
+        }else{
+            res.status(401).send("수정 권한 없음")
+        }
+        
+        
+    })
+
     return router;
   }
     
