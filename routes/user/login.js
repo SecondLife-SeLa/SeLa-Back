@@ -31,6 +31,7 @@ module.exports = (express, db, session, sessionStore) => {
           req.session.name = client.id;
           req.session.save(function(){
             res.status(200).send(user[0]) // 로그인 성공
+            
           })
         } else{
             res.status(400).send("비밀번호 불일치")
